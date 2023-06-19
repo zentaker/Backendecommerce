@@ -1,0 +1,14 @@
+@startuml
+
+package "Dominio (e-commerce)" {
+  [Catalogo de producto] <<core>> 
+  [Ordenes de compra] <<support>>
+  [Pago]<<generico>>
+  [Envio]<<support>>
+  [Inventario]<<generico>>
+  [Control de acesso]<<generico>>
+  [Clientes]<<support>>
+}
+
+
+@enduml

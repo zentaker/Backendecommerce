@@ -1,0 +1,62 @@
+@startuml
+left to right direction
+' Horizontal lines: -->, <--, <-->
+' Vertical lines: ->, <-, <->
+title Modelo (e-commerce)
+
+map Cliente {
+
+}
+object OrdenDeCompra {
+    Place Orden
+    Get resumen de compra
+
+}
+object CarroDeCompras {
+    add Productos
+    Get PrecioTotal
+    Get ImpuestoTotal
+    VerificarStock
+    
+}
+object Productos {
+    Get cantidad
+    Get precio
+
+}
+object CalculadorImpuestos {
+    get calculat impuesto del producto
+
+}
+object PasarellaDePago {
+    espesificar informacion
+
+}
+object DireccionFacturacion {
+    espesificar direccion
+
+}
+object DireccionEnvio {
+    espesificar direccion
+    agregar nota delivery
+
+}
+object GeneradorDeCorreo{
+    generar email
+
+}
+object EmailDispatcher{
+    enviar email
+
+}
+Cliente --> OrdenDeCompra : genera
+Cliente --> CarroDeCompras : usa
+CarroDeCompras --> Productos : contiene
+CarroDeCompras --> CalculadorImpuestos : Obtiene 
+OrdenDeCompra --> PasarellaDePago : paga
+OrdenDeCompra --> DireccionFacturacion : tiene
+OrdenDeCompra --> DireccionEnvio : tiene
+OrdenDeCompra --> GeneradorDeCorreo: Email confirmacion
+GeneradorDeCorreo --> EmailDispatcher: envia
+
+@enduml

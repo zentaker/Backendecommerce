@@ -1,0 +1,113 @@
+@startuml
+left to right direction
+
+title Modelo (e-commerce)
+
+map Cliente {
+
+}
+
+object OrdenDeCompra {
+    - Orden
+    - ResumenDeCompra
+    - Estado
+
+    + generar()
+    + obtenerResumenDeCompra()
+    + obtenerEstado()
+    + actualizarEstado(nuevoEstado: String)
+}
+
+object CarroDeCompras {
+    - Productos
+    - PrecioTotal
+    - ImpuestoTotal
+
+    + agregarProducto()
+    + getPrecioTotal()
+    + getImpuestoTotal()
+    + verificarStock()
+}
+
+object Producto {
+    - Cantidad
+    - Precio
+    - Ubicacion
+
+    + getCantidad()
+    + getPrecio()
+    + getUbicacion()
+    + setUbicacion(ubicacion: String)
+}
+
+object CalculadorImpuestos {
+    + calcularImpuesto(producto: Producto)
+}
+
+object PasarellaDePago {
+    - Informacion
+
+    + especificarInformacion()
+}
+
+object DireccionFacturacion {
+    - Direccion
+
+    + especificarDireccion()
+}
+
+object DireccionEnvio {
+    - Direccion
+    - NotaDelivery
+
+    + especificarDireccion()
+    + agregarNotaDelivery()
+}
+
+object Almacen {
+    - Productos
+    - UbicacionesDisponibles
+
+    + agregarProducto(producto: Producto)
+    + quitarProducto(producto: Producto)
+    + obtenerUbicacionesDisponibles()
+    + asignarUbicacion(producto: Producto, ubicacion: String)
+}
+
+object GeneradorDeCorreo {
+    + generarEmail()
+}
+
+object EmailDispatcher {
+    + enviarEmail(email: String)
+}
+
+object Tracking {
+    - Estado
+    - FechaActualizacion
+    - SalioDelAlmacen
+
+    + obtenerEstado()
+    + obtenerFechaActualizacion()
+    + actualizarEstado(nuevoEstado: String)
+    + verificarSalidaAlmacen()
+    + marcarSalidaAlmacen()
+}
+
+Cliente --> OrdenDeCompra: genera
+Cliente --> CarroDeCompras: usa
+CarroDeCompras --> Producto: contiene
+CarroDeCompras --> CalculadorImpuestos: Obtiene
+OrdenDeCompra --> PasarellaDePago: paga
+OrdenDeCompra --> DireccionFacturacion: tiene
+OrdenDeCompra --> DireccionEnvio: tiene
+OrdenDeCompra --> GeneradorDeCorreo: Email confirmacion
+GeneradorDeCorreo --> EmailDispatcher: envia
+OrdenDeCompra --> Tracking: tiene
+Tracking --> OrdenDeCompra: actualizaEstado
+Tracking --> Almacen: verificarSalidaAlmacen
+Tracking --> Almacen: marcarSalidaAlmacen
+Almacen --> Producto: contiene
+Almacen --> Producto: asignarUbicacion
+
+@enduml
